@@ -1,0 +1,67 @@
+# Model registry with real, verifiable pricing.
+#
+# Prices are USD per 1K tokens and were checked against provider pricing pages
+# on the date given in `pricing_updated_at`. Provider pricing changes over
+# time -- re-verify before publishing measured savings:
+#   OpenAI:   https://developers.openai.com/api/docs/pricing
+#   Anthropic: https://platform.claude.com/docs/en/models/overview
+#
+# Model ID lifecycle notes (checked 2026-09-22):
+#   - claude-3-5-sonnet-latest retired 2025-10-28, claude-3-5-haiku-latest
+#     retired 2026-02-19; replaced below with active models.
+#   - gpt-4o / gpt-4o-mini remain available on the OpenAI API.
+models:
+  ollama_llama:
+    provider: ollama
+    model_id: llama3.2:3b
+    input_cost_per_1k: 0.0
+    output_cost_per_1k: 0.0
+    average_latency_ms: 700
+    quality_tier: low
+    enabled: true
+    pricing_updated_at: "2026-09-22"
+    pricing_notes: "Local inference via Ollama; no per-token API charge (hardware cost only)."
+
+  openai_mini:
+    provider: openai
+    model_id: gpt-4o-mini
+    input_cost_per_1k: 0.00015   # $0.15 / 1M input tokens
+    output_cost_per_1k: 0.0006    # $0.60 / 1M output tokens
+    average_latency_ms: 900
+    quality_tier: medium
+    enabled: true
+    pricing_updated_at: "2026-09-22"
+    pricing_notes: "OpenAI list price, standard processing, cached input not modelled."
+
+  openai_high:
+    provider: openai
+    model_id: gpt-4o
+    input_cost_per_1k: 0.0025     # $2.50 / 1M input tokens
+    output_cost_per_1k: 0.01      # $10.00 / 1M output tokens
+    average_latency_ms: 1300
+    quality_tier: high
+    enabled: true
+    pricing_updated_at: "2026-09-22"
+    pricing_notes: "OpenAI list price, standard processing, cached input not modelled."
+
+  anthropic_haiku:
+    provider: anthropic
+    model_id: claude-haiku-4-5
+    input_cost_per_1k: 0.001      # $1.00 / 1M input tokens
+    output_cost_per_1k: 0.005     # $5.00 / 1M output tokens
+    average_latency_ms: 850
+    quality_tier: medium
+    enabled: true
+    pricing_updated_at: "2026-09-22"
+    pricing_notes: "Anthropic list price. Replaces retired claude-3-5-haiku-latest."
+
+  anthropic_sonnet:
+    provider: anthropic
+    model_id: claude-sonnet-5
+    input_cost_per_1k: 0.002      # $2.00 / 1M input tokens
+    output_cost_per_1k: 0.01      # $10.00 / 1M output tokens
+    average_latency_ms: 1200
+    quality_tier: high
+    enabled: true
+    pricing_updated_at: "2026-09-22"
+    pricing_notes: "Anthropic list price. Replaces retired claude-3-5-sonnet-latest."

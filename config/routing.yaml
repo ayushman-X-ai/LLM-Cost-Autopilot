@@ -1,0 +1,42 @@
+# Routing policy: tier -> model, fallback chain, verification and metrics settings.
+#
+# `fallbacks` is tried in order when the primary model fails after retries
+# (timeout, connection error, 429/5xx, provider outage).
+
+tiers:
+  tier_1:
+    model: ollama_llama
+    quality_threshold: 3.8
+    fallbacks:
+      - openai_mini
+      - anthropic_haiku
+  tier_2:
+    model: openai_mini
+    quality_threshold: 4.0
+    fallbacks:
+      - anthropic_haiku
+      - ollama_llama
+  tier_3:
+    model: openai_high
+    quality_threshold: 4.2
+    fallbacks:
+      - anthropic_sonnet
+      - anthropic_haiku
+
+verification:
+  enabled: true
+  default_mode: fast          # fast = async verification after response; quality = verify before returning
+  verifier_model: anthropic_haiku
+  escalation_models:          # tried in order; first enabled, allowed model that differs from the routed model wins
+    - openai_high
+    - anthropic_sonnet
+  agreement_threshold: 0.70
+  quality_threshold: 4.0      # fallback threshold when a tier has no explicit threshold
+  weights:                    # quality_score = weighted sum of dimension scores (each 1-5)
+    correctness: 0.4
+    relevance: 0.2
+    completeness: 0.2
+    instruction_following: 0.2
+
+metrics:
+  baseline_model: openai_high # "run every request on the most expensive tier" baseline for savings math

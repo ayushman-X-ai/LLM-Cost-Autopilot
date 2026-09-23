@@ -1,0 +1,23 @@
+LOAD TEST REPORT
+============================================================
+Mode:                DRY RUN (simulated responses, registry prices - not real provider costs)
+Requests:                   500
+Successful:                 500
+Failed:                       0
+Concurrency:                 20
+Verification mode:      default
+
+Average latency:          735.3 ms
+P50:                      724.6 ms
+P95:                      882.1 ms
+P99:                     1683.8 ms
+
+Baseline cost:       $   0.1635  (everything on openai_high)
+Autopilot cost:      $   0.0765
+Savings:             $   0.0870  (53.19%)
+
+Escalation rate:          0.00%
+Quality parity:         100.0%  (verified >= threshold 4.0)
+
+Tier distribution:   {'tier_1': 168, 'tier_2': 167, 'tier_3': 165}
+Model distribution:  {'ollama_llama': 168, 'openai_mini': 167, 'openai_high': 165}

@@ -1,0 +1,37 @@
+# Scheduled evaluation: keeps routing quality measured, not assumed.
+#
+# Weekly (and on manual dispatch) this trains a fresh classifier, evaluates it
+# on the held-out 500-prompt set, exercises the feedback-loop retrain path, and
+# uploads the reports so accuracy/per-tier metrics can be tracked over time.
+name: Scheduled evaluation
+
+on:
+  schedule:
+    - cron: "0 6 * * 1"   # Mondays 06:00 UTC
+  workflow_dispatch:
+
+jobs:
+  evaluate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - run: pip install -r requirements.txt
+      - name: Train on base dataset
+        run: python -m autopilot.cli train
+      - name: Evaluate on held-out routing set
+        run: python -m autopilot.cli evaluate
+      - name: Retrain including routing failures
+        run: python -m autopilot.cli retrain
+      - name: Feedback loop summary
+        run: python -m autopilot.cli failures
+      - name: Upload evaluation reports
+        uses: actions/upload-artifact@v4
+        with:
+          name: routing-evaluation
+          path: |
+            artifacts/routing_eval_report.json
+            artifacts/complexity_classifier.json
+            data/evaluation_results.jsonl
