@@ -14,3 +14,4 @@ logs/*.log
 artifacts/*.joblib
 artifacts/*.json
 .DS_Store
+social_preview.png

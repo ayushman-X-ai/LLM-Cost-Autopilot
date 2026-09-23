@@ -1,5 +1,11 @@
 # LLM Cost Autopilot
 
+![LLM Cost Autopilot — complexity-aware LLM routing](docs/banner.png)
+
+[![CI](https://github.com/ayushman-X-ai/LLM-Cost-Autopilot/actions/workflows/ci.yml/badge.svg)](https://github.com/ayushman-X-ai/LLM-Cost-Autopilot/actions/workflows/ci.yml)
+[![Scheduled evaluation](https://github.com/ayushman-X-ai/LLM-Cost-Autopilot/actions/workflows/evaluate.yml/badge.svg)](https://github.com/ayushman-X-ai/LLM-Cost-Autopilot/actions/workflows/evaluate.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+
 A production-style intelligent LLM routing layer that classifies request complexity, routes to the least-cost capable model, verifies quality (fast async or blocking quality mode), auto-escalates failures, falls back across providers on outages, and exposes cost/quality analytics.
 
 > Portfolio project based on **Project 2 — LLM Cost Autopilot** from the supplied BASWE AI Engineering Projects Guide. The guide specifies multi-provider routing, a complexity classifier, async quality verification, auto-escalation, SQLite/JSON audit logs, dashboarding, FastAPI endpoints, Docker, and load testing.
